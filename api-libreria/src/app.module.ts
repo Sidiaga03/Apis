@@ -3,10 +3,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { ClientesModule } from './modulos/clientes/clientes.module';
+import { AutoresModule } from './modulos/autores/autores.module';
 
 @Module({
   imports: [
-    ConfigModule,
+    ConfigModule.forRoot(),
+    // SeedModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -16,7 +19,9 @@ import { ConfigModule } from '@nestjs/config';
       password: process.env.DB_PASSWORD,
       autoLoadEntities: true,
       synchronize: true
-    })
+    }),
+    AutoresModule,
+    ClientesModule
   ],
  
   controllers: [AppController],
