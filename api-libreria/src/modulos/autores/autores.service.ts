@@ -1,52 +1,57 @@
-import { Injectable, InternalServerErrorException, Patch, Post } from '@nestjs/common';
-import { CreateAutoresDto } from './dto/create-autores.dto';
-import { UpdateAutoresDto } from './dto/update-autores.dto';
+import { Injectable, InternalServerErrorException, Patch } from '@nestjs/common';
+import { CreateAutoreDto } from './dto/create-autores.dto';
+import { UpdateAutoreDto } from './dto/update-autores.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Autores } from './entities/autores.entity';
+import { Autore } from './entities/autores.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class AutoresService {
   constructor(
-    @InjectRepository(Autores)
-    private readonly autorRepository: Repository<Autores>
-  ){
+    @InjectRepository(Autore)
+    private readonly autorRepository: Repository<Autore>
+  ){}
 
-  }
-
-  // @Post()
-  // async create(createAutoresDto: CreateAutoresDto) {
-  //   try{
-  //   // const autor = this.autorRepository.create(createAutoresDto);
-
-  //   await this.autorRepository.save(autor);
-  //   return{
-  //     msg: 'Registro Insertado',
-  //     data: autor,
-  //     status: 200
-  //   }
-
-  //   }catch(error){
+async create(createAutoreDto: CreateAutoreDto) {
+  try {
+    const autor = this.autorRepository.create(createAutoreDto);
+    await this.autorRepository.save(autor)
+    return {
+      msg: 'Registro insertado',
+      data: autor,
+      status: 200 
       
-  //     console.log(error);
-  //     throw new InternalServerErrorException('Pongase en contacto con el Sysadmin')
-  //   }
-  //   return 'This action adds a new autores';
-  // }
+    }
+  }catch(error){
+    throw new InternalServerErrorException('Ponte en contacto con el admin')
+  }}
 
   findAll() {
     return `This action returns all autores`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} autores`;
-  }
-  @Patch()
-  update(id: number, updateAutoresDto: UpdateAutoresDto) {
-    return `This action updates a #${id} autores`;
+  findOne(nif: number) {
+    return `This action returns a #${nif} autore`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} autores`;
+  @Patch()
+  update(nif: number, updateAutoreDto: UpdateAutoreDto) {
+    return `This action updates a #${nif} autore`;
+  }
+
+  remove(nif: number) {
+    return `This action removes a #${nif} autore`;
+  }
+
+  async deleteAllAutores(){
+    const query = this.autorRepository.createQueryBuilder('autor');
+    try{
+      return await query
+        .delete()
+        .where({})
+        .execute()
+    }catch(error){
+      throw new InternalServerErrorException('Pongase en contacto en el administrador')
+    }
   }
 }

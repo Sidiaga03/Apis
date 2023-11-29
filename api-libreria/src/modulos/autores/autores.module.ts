@@ -1,14 +1,15 @@
-import { Module } from "@nestjs/common";
-import { AutoresService } from './autores.service'
-import { AutoresController } from './autores.controller'
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { Autores } from "./entities/autores.entity";
+import { Module } from '@nestjs/common';
+import { AutoresController } from './autores.controller';
+import { AutoresService } from './autores.service';
+import { Autore } from './entities/autores.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-    controllers: [AutoresController],
-    providers: [AutoresService],
-    imports: [
-        TypeOrmModule.forFeature([Autores])
-    ]
+  controllers: [AutoresController],
+  providers: [AutoresService],
+  imports: [
+    TypeOrmModule.forFeature([Autore])
+  ],
+  exports: [AutoresService, TypeOrmModule]
 })
 export class AutoresModule {}

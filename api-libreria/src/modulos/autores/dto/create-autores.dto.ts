@@ -1,12 +1,14 @@
-import { IsString, MinLength } from "class-validator"
+import { IsInt, IsPositive, IsString, Matches, MaxLength, MinLength } from "class-validator";
+import { BeforeInsert } from "typeorm";
 
-export class CreateAutoresDto {
+
+export class CreateAutoreDto{
 
     @IsString()
     @MinLength(1)
-    id: string;
+    nif: string;
 
     @IsString()
-    @MinLength(10)
+    @MinLength(5)
     nombre: string;
 }

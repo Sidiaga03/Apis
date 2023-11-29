@@ -5,18 +5,19 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { ClientesModule } from './modulos/clientes/clientes.module';
 import { AutoresModule } from './modulos/autores/autores.module';
+import { SeedModule } from './modulos/seed/seed.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    // SeedModule,
+    SeedModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.DB_HOST,
-      port: +process.env.DB_PORT,
-      database: process.env.DB_NAME,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
+      host: "192.168.8.68",
+      port: 5433,
+      database: "Picasso",
+      username: "postgress",
+      password: "pswPicasso",
       autoLoadEntities: true,
       synchronize: true
     }),
